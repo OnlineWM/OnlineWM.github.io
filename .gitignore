@@ -1,0 +1,24 @@
+# Local OS and editor files
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Credentials and runtime output
+.env
+.env.*
+*.log
+node_modules/
+.cache/
+__pycache__/
+*.py[cod]
+playwright-report/
+test-results/
+
+# Development tooling lives in ../ProjectPage_Local, never in the site.
+/scripts/
+/archive/
+/local/
+/tmp/
+/qa-output/
+/assets/media/manifest.json

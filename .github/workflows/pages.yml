@@ -1,0 +1,72 @@
+name: Deploy OnlineWM to GitHub Pages
+
+# Intended repository: OnlineWM/onlinewm.github.io
+# Public URL after enabling GitHub Pages: https://onlinewm.github.io/
+# Deploy manually while the repository is staged privately.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the static site
+        uses: actions/checkout@v7
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+      - name: Stage public website files
+        shell: bash
+        run: |
+          publish_dir="$RUNNER_TEMP/onlinewm-pages"
+          mkdir -p "$publish_dir"
+          # Publish only this explicit allowlist; local scripts and archives stay out.
+          public_files=(
+            index.html 404.html styles.css app.js citation.bib
+            site.webmanifest robots.txt sitemap.xml .nojekyll
+            assets/og-image.png
+            assets/brand/mark-512.png assets/brand/favicon-32.png
+            assets/brand/favicon-192.png assets/brand/apple-touch-icon.png
+            assets/brand/favicon.ico
+            assets/fonts/manrope-variable.woff2
+            assets/fonts/source-sans-3-variable.woff2
+            assets/fonts/source-sans-3-italic-variable.woff2
+            assets/fonts/Manrope-LICENSE.txt assets/fonts/Manrope-FONTLOG.txt
+            assets/fonts/Source-Sans-3-LICENSE.txt
+          )
+          figure_names=(
+            teaser method visualization
+            visualization_appendix_1 visualization_appendix_2 visualization_appendix_3
+            visualization_real_world visualization_real_world_2
+            visualization_real_world_appendix_1 visualization_real_world_appendix_2
+            visualization_real_world_appendix_3 visualization_real_world_appendix_4
+          )
+          for figure in "${figure_names[@]}"; do
+            for width in 1600 2400; do
+              public_files+=("assets/media/${figure}-${width}.webp")
+            done
+          done
+          for public_file in "${public_files[@]}"; do
+            test -f "$public_file"
+            mkdir -p "$publish_dir/$(dirname "$public_file")"
+            cp "$public_file" "$publish_dir/$public_file"
+          done
+      - name: Upload the static site
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ${{ runner.temp }}/onlinewm-pages
+          include-hidden-files: true
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

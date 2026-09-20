@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://onlinewm.github.io/sitemap.xml

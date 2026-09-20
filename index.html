@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f9fc">
+  <meta name="description" content="OnlineWM improves world modeling through active online interaction and causality-aware fine-tuning. Explore the method, results, and visual comparisons.">
+  <meta name="color-scheme" content="light">
+  <title>OnlineWM — Causality-Aware Active Online Learning for Effective World Modeling</title>
+  <link rel="canonical" href="https://onlinewm.github.io/">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OnlineWM">
+  <meta property="og:title" content="OnlineWM: Causality-Aware Active Online Learning for Effective World Modeling">
+  <meta property="og:description" content="Causality-aware active online learning for effective world modeling. Method, experiments, and visual results.">
+  <meta property="og:url" content="https://onlinewm.github.io/">
+  <meta property="og:image" content="https://onlinewm.github.io/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OnlineWM">
+  <meta name="twitter:description" content="Causality-Aware Active Online Learning for Effective World Modeling">
+  <meta name="twitter:image" content="https://onlinewm.github.io/assets/og-image.png">
+  <link rel="preload" href="assets/fonts/source-sans-3-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/manrope-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"ScholarlyArticle","name":"OnlineWM: Causality-Aware Active Online Learning for Effective World Modeling","headline":"OnlineWM: Causality-Aware Active Online Learning for Effective World Modeling","url":"https://onlinewm.github.io/","inLanguage":"en","isAccessibleForFree":true,"author":[{"@type":"Person","name":"Yikun Miao"},{"@type":"Person","name":"Fangqi Zhu"},{"@type":"Person","name":"Quanxin Shou"},{"@type":"Person","name":"Xiaoyi Pang"},{"@type":"Person","name":"Zhengyang Yan"},{"@type":"Person","name":"Junhao Li"},{"@type":"Person","name":"Haodong Wang"},{"@type":"Person","name":"Zicong Hong"},{"@type":"Person","name":"Song Guo"}]}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav class="nav-shell" aria-label="Main navigation">
+      <a class="wordmark" href="#top" aria-label="OnlineWM home"><img src="assets/brand/mark-512.png" width="34" height="34" alt=""><span class="brand-gradient">OnlineWM</span></a>
+      <button class="menu-toggle icon-button" type="button" aria-label="Open navigation" aria-controls="nav-links" aria-expanded="false" data-menu-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <div class="nav-links" id="nav-links">
+        <a href="#abstract">Abstract</a><a href="#method">Method</a><a href="#results">Results</a><a href="#visualizations">Visualizations</a>
+        <a class="nav-cite" href="#citation">Cite <span aria-hidden="true">↗</span></a>
+      </div>
+    </nav>
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+  </header>
+
+  <main id="main">
+    <section class="hero section-shell" id="top" aria-labelledby="paper-title">
+      <div class="hero-content glass-panel">
+        <h1 id="paper-title"><span class="hero-name"><img src="assets/brand/mark-512.png" width="96" height="96" alt=""><span class="hero-word brand-gradient">OnlineWM</span></span><span class="paper-subtitle">Causality-Aware Active Online Learning<br class="desktop-break"> for Effective World Modeling</span></h1>
+        <div class="authors" id="authors" aria-label="Authors">
+          <div class="author-row">
+          <span class="author">Yikun Miao</span>
+          <span class="author">Fangqi Zhu</span>
+          <span class="author">Quanxin Shou</span>
+          <span class="author">Xiaoyi Pang</span>
+          <span class="author">Zhengyang Yan</span>
+          </div>
+          <div class="author-row">
+          <span class="author">Junhao Li</span>
+          <span class="author">Haodong Wang</span>
+          <span class="author">Zicong Hong</span>
+          <span class="author">Song Guo<sup>†</sup></span>
+          </div>
+        </div>
+        <p class="affiliation">Department of Computer Science and Engineering<br> <strong>The Hong Kong University of Science and Technology</strong><br> <span>Hong Kong SAR, China</span></p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="https://arxiv.org/abs/2609.23753" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v5h5M8 12h8M8 16h6"/></svg>Paper <span aria-hidden="true">↗</span></a>
+          <span class="button button-soon" title="Repository planned at github.com/OnlineWM/OnlineWM_Code"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 16"/></svg>Code <span class="soon-tag">Coming soon</span></span>
+          <a class="button button-quiet" href="#citation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h6v7H6c0 3 2 4 4 5M14 5h6v7h-4c0 3 2 4 4 5"/></svg>BibTeX</a>
+        </div>
+        <a class="correspondence" href="mailto:songguo@cse.ust.hk"><sup>†</sup> Correspondence: songguo@cse.ust.hk</a>
+      <figure class="paper-figure teaser-figure" id="teaser" data-figure-title="From offline data to online interaction" data-figure-label="Fig. 1">
+        <button class="figure-trigger" data-zoom="teaser" aria-label="Enlarge the motivation figure">
+          <img src="assets/media/teaser-1600.webp" srcset="assets/media/teaser-1600.webp 1600w, assets/media/teaser-2400.webp 2400w" sizes="(max-width: 700px) 94vw, 1100px" width="1600" height="495" fetchpriority="high" alt="Offline training uses a static simulator dataset, while OnlineWM actively interacts with a simulator and updates the world model in a feedback loop.">
+        </button>
+        <figcaption><span class="figure-ref">Fig. 1.</span> Static offline datasets cannot adapt to a world model’s changing prediction errors. OnlineWM closes the loop between simulator interaction and model learning, acquiring informative experiences and learning how actions change future states.</figcaption>
+      </figure>
+      </div>
+    </section>
+
+
+    <div class="section-band intro-band">
+    <section class="section-shell section-block abstract-section" id="abstract" aria-labelledby="abstract-title">
+      <h2 id="abstract-title">Abstract</h2>
+        <div class="abstract-copy" id="abstract-copy">
+        <p>Generative world models aim to predict future states conditioned on actions, where action controllability is fundamental for reliable dynamics modeling. While recent efforts leverage simulator-generated data to enhance this capability, existing training pipelines face two fundamental limitations. First, static offline data collection leads to a distribution misalignment between training sets and the model’s evolving error patterns, failing to resolve critical long-tail scenarios where dynamics predictions remain unreliable. Second, the standard objective of minimizing observational discrepancy often encourages the model to exploit spurious correlations instead of capturing the underlying action-effect causality. To address these limitations, we propose <strong>OnlineWM</strong>, an online training framework that continuously improves world modeling through active simulator interaction and causality-aware optimization. OnlineWM introduces two key innovations: (1) <strong>Active Online Learning</strong>: Instead of using fixed datasets, OnlineWM adaptively queries the simulator for new interaction sequences that target the model&#x27;s current predictive weaknesses, ensuring high-utility data acquisition. (2) <strong>Causality-Aware Fine-Tuning</strong>: We propose a counterfactual learning strategy that contrasts the outcomes of different actions from identical states, forcing the model to attribute state transitions to specific actions rather than ambient environmental evolution, thereby grounding its predictions in reliable causal mechanisms. By integrating active data acquisition with causal optimization, OnlineWM establishes a closed-loop refinement process that ensures the model is both robust to diverse scenarios and precise in its causal attribution. Extensive experiments demonstrate that OnlineWM significantly enhances action controllability and generalizes effectively to unseen domains, suggesting the learning of physically-grounded causal dynamics rather than simple visual patterns.</p>
+      </div>
+    </section>
+    </div>
+
+
+    <div class="section-band chapter-panel method-band">
+    <section class="section-shell section-block" id="method" aria-labelledby="method-title">
+      <h2 id="method-title">Method</h2>
+      <figure class="paper-figure" data-figure-title="The OnlineWM framework" data-figure-label="Fig. 2">
+        <button class="figure-trigger" data-zoom="method" aria-label="Enlarge the method figure">
+          <img src="assets/media/method-1600.webp" srcset="assets/media/method-1600.webp 1600w, assets/media/method-2400.webp 2400w" sizes="(max-width: 700px) 94vw, 1100px" width="1600" height="900" loading="lazy" decoding="async" alt="OnlineWM pipeline: parallel simulation, difficulty scoring, active sample selection, counterfactual pair construction, joint optimization, and EMA updates.">
+        </button>
+        <figcaption><span class="figure-ref">Fig. 2.</span> OnlineWM combines parallel simulation, difficulty-balanced acquisition and counterfactual optimization in a continuous cycle of data collection and model learning.</figcaption>
+      </figure>
+      <div class="method-copy" role="group" aria-labelledby="strategies-title">
+        <h3 class="subsection-title" id="strategies-title"><span class="brand-gradient">Two Core Strategies</span></h3>
+        <article class="method-card method-card-acquisition">
+          <div class="method-card-heading"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h12l-3-3m3 3-3 3M19 17H7l3 3m-3-3 3-3"/><path d="M4 10v4m16-4v4"/></svg><h4>Active Online Learning <span class="method-abbr">(AOL)</span></h4></div>
+          <p><strong>AOL acquires informative online training data by balancing scene and action difficulty.</strong> It pairs harder scenes with relatively easier actions, and easier scenes with harder actions. This complementary selection adapts simulator interaction to the model’s evolving prediction errors, prioritizing trajectories that are both novel and learnable.</p>
+        </article>
+        <article class="method-card method-card-causal">
+          <div class="method-card-heading"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="m8 11 8-4M8 13l8 4"/></svg><h4>Causality-Aware Fine-Tuning <span class="method-abbr">(CFT)</span></h4></div>
+          <p><strong>CFT strengthens action control by contrasting outcomes of different actions from the same conditioning state.</strong> For each selected trajectory, the most visually similar alternative serves as a counterfactual negative. The paired supervision guides predictions toward the selected outcome and away from the counterfactual, emphasizing action-dependent differences.</p>
+        </article>
+      </div>
+    </section>
+    </div>
+
+    <div class="section-band chapter-panel results-band">
+    <section class="section-shell section-block" id="results" aria-labelledby="results-title">
+      <h2 id="results-title">Experiments</h2>
+      <p class="section-intro"><strong>We evaluate OnlineWM in terms of visual quality and action controllability.</strong> Experiments use held-out Minecraft sequences and report SSIM, LPIPS, VBench, action-token accuracy and relative pose error. Comparisons with random acquisition and AOL-only training assess the benefits of CFT; additional ablations examine counterfactual selection and the acquisition strategy.</p>
+      <div class="results-module">
+        <div class="results-topline"><div class="tabs" role="tablist" aria-label="Quantitative results"><button id="tab-control" role="tab" aria-selected="true" aria-controls="panel-control" data-result-tab="control" tabindex="0">Action control</button><button id="tab-visual" role="tab" aria-selected="false" aria-controls="panel-visual" data-result-tab="visual" tabindex="-1">Visual quality</button><button id="tab-ablation" role="tab" aria-selected="false" aria-controls="panel-ablation" data-result-tab="ablation" tabindex="-1">Ablations</button></div><span class="table-guide">↑ higher is better &nbsp; ↓ lower is better</span></div>
+        <div role="tabpanel" id="panel-control" aria-labelledby="tab-control" data-result-panel="control">
+          <div class="table-stage" data-table="control">
+            <div class="table-shell">
+              <div class="table-topline">
+                <h3>Action controllability</h3>
+                <span>Tab. 2</span>
+              </div>
+              <p class="table-caption">Action-token accuracy and relative pose error across training variants. Best results are in bold.</p>
+              <div class="table-scroll" tabindex="0" role="region" aria-label="Action controllability; scroll horizontally for all metrics">
+                <table class="method-table">
+                  <caption class="sr-only">Action controllability. Tab. 2 in the paper.</caption>
+                  <thead>
+                    <tr class="metric-group-row">
+                      <th scope="col" rowspan="2">Method</th>
+                      <th scope="colgroup" colspan="2" class="metric-group">Action Accuracy</th>
+                      <th scope="colgroup" colspan="2" class="metric-group metric-group-start">Camera Control</th>
+                    </tr>
+                    <tr>
+                      <th scope="col" class="metric-col">Combined<span aria-label="higher is better">↑</span></th>
+                      <th scope="col" class="metric-col">Fine-grained<span aria-label="higher is better">↑</span></th>
+                      <th scope="col" class="metric-col metric-group-start">RPE<sub>rot</sub><span aria-label="lower is better">↓</span></th>
+                      <th scope="col" class="metric-col">RPE<sub>trans</sub><span aria-label="lower is better">↓</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="method-base">
+                      <th scope="row"><span class="method-label">Base Model</span></th>
+                      <td>0.240</td>
+                      <td>0.490</td>
+                      <td>0.6906</td>
+                      <td>0.0235</td>
+                    </tr>
+                    <tr class="method-child">
+                      <th scope="row"><span class="method-label"><span class="method-prefix">+</span> <em class="method-name">Random</em></span></th>
+                      <td>0.356</td>
+                      <td>0.569</td>
+                      <td>0.6393</td>
+                      <td>0.0199</td>
+                    </tr>
+                    <tr class="method-child">
+                      <th scope="row"><span class="method-label"><span class="method-prefix">+</span> <em class="method-name">AOL</em></span></th>
+                      <td>0.393</td>
+                      <td>0.610</td>
+                      <td>0.5033</td>
+                      <td>0.0166</td>
+                    </tr>
+                    <tr class="table-full">
+                      <th scope="row"><span class="method-label">Full Model <em class="method-name">(w/ CFT)</em></span></th>
+                      <td class="best-value">0.425</td>
+                      <td class="best-value">0.640</td>
+                      <td class="best-value">0.4072</td>
+                      <td class="best-value">0.0159</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <p class="result-takeaway"><strong>Active acquisition improves both action accuracies and reduces trajectory errors.</strong> Adding CFT yields the best results across all four metrics.</p>
+        </div>
+        <div role="tabpanel" id="panel-visual" aria-labelledby="tab-visual" data-result-panel="visual">
+          <div class="table-stage" data-table="visual">
+            <div class="table-shell">
+              <div class="table-topline">
+                <h3>Visual generation quality</h3>
+                <span>Tab. 1</span>
+              </div>
+              <p class="table-caption">Visual quality measured by SSIM, LPIPS and VBench. Best scores among comparable variants are in bold; gray base-model VBench scores are reference values.</p>
+              <div class="table-scroll" tabindex="0" role="region" aria-label="Visual generation quality; scroll horizontally for all metrics">
+                <table class="method-table">
+                  <caption class="sr-only">Visual generation quality. Tab. 1 in the paper.</caption>
+                  <thead>
+                    <tr class="metric-group-row">
+                      <th scope="col" rowspan="2">Method</th>
+                      <th scope="col" rowspan="2" class="metric-col">SSIM<span aria-label="higher is better">↑</span></th>
+                      <th scope="col" rowspan="2" class="metric-col">LPIPS<span aria-label="lower is better">↓</span></th>
+                      <th scope="colgroup" colspan="6" class="metric-group metric-group-start">VBench</th>
+                    </tr>
+                    <tr>
+                      <th scope="col" class="metric-col metric-group-start">Subject<span aria-label="higher is better">↑</span></th>
+                      <th scope="col" class="metric-col">Background<span aria-label="higher is better">↑</span></th>
+                      <th scope="col" class="metric-col">Motion<span aria-label="higher is better">↑</span></th>
+                      <th scope="col" class="metric-col">Aesthetic<span aria-label="higher is better">↑</span></th>
+                      <th scope="col" class="metric-col">Imaging<span aria-label="higher is better">↑</span></th>
+                      <th scope="col" class="metric-col">Overall<span aria-label="higher is better">↑</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="reference-row reference-ground-truth">
+                      <th scope="row"><em>Ground truth</em></th>
+                      <td class="reference-cell">1.000</td>
+                      <td class="reference-cell">0.000</td>
+                      <td class="reference-cell">0.901</td>
+                      <td class="reference-cell">0.961</td>
+                      <td class="reference-cell">0.974</td>
+                      <td class="reference-cell">0.545</td>
+                      <td class="reference-cell">0.695</td>
+                      <td class="reference-cell">0.815</td>
+                    </tr>
+                    <tr class="method-base">
+                      <th scope="row"><span class="method-label">Base Model</span></th>
+                      <td>0.458</td>
+                      <td>0.506</td>
+                      <td class="reference-cell">0.895</td>
+                      <td class="reference-cell">0.965</td>
+                      <td class="reference-cell">0.977</td>
+                      <td class="reference-cell">0.549</td>
+                      <td class="reference-cell">0.713</td>
+                      <td class="reference-cell">0.820</td>
+                    </tr>
+                    <tr class="method-child">
+                      <th scope="row"><span class="method-label"><span class="method-prefix">+</span> <em class="method-name">Random</em></span></th>
+                      <td>0.531</td>
+                      <td>0.453</td>
+                      <td>0.876</td>
+                      <td>0.967</td>
+                      <td>0.981</td>
+                      <td>0.537</td>
+                      <td>0.639</td>
+                      <td>0.800</td>
+                    </tr>
+                    <tr class="method-child">
+                      <th scope="row"><span class="method-label"><span class="method-prefix">+</span> <em class="method-name">AOL</em></span></th>
+                      <td class="best-value">0.538</td>
+                      <td>0.419</td>
+                      <td class="best-value">0.890</td>
+                      <td class="best-value">0.970</td>
+                      <td class="best-value">0.982</td>
+                      <td>0.541</td>
+                      <td>0.644</td>
+                      <td>0.805</td>
+                    </tr>
+                    <tr class="table-full">
+                      <th scope="row"><span class="method-label">Full Model <em class="method-name">(w/ CFT)</em></span></th>
+                      <td>0.531</td>
+                      <td class="best-value">0.411</td>
+                      <td class="best-value">0.890</td>
+                      <td>0.968</td>
+                      <td>0.979</td>
+                      <td class="best-value">0.543</td>
+                      <td class="best-value">0.681</td>
+                      <td class="best-value">0.812</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <p class="result-takeaway"><strong>Visual quality remains consistent across variants.</strong> AOL improves SSIM and LPIPS over random acquisition; CFT further improves LPIPS and the VBench Imaging and Overall scores.</p>
+        </div>
+        <div role="tabpanel" id="panel-ablation" aria-labelledby="tab-ablation" data-result-panel="ablation">
+          <div class="table-stage" data-table="ablation">
+            <div class="table-shell">
+              <div class="table-topline">
+                <h3>AOL, CFT, and negative selection</h3>
+                <span>Tab. 7</span>
+              </div>
+              <p class="table-caption">Random + CFT uses random acquisition; the random-negative variant pairs AOL with a randomly selected counterfactual branch. Best results are in bold.</p>
+              <div class="table-scroll" tabindex="0" role="region" aria-label="AOL, CFT, and negative selection; scroll horizontally for all metrics">
+                <table class="method-table">
+                  <caption class="sr-only">AOL, CFT, and negative selection. Tab. 7 in the paper.</caption>
+                  <thead>
+                    <tr class="metric-group-row">
+                      <th scope="col" rowspan="2">Method</th>
+                      <th scope="colgroup" colspan="2" class="metric-group">Action Accuracy</th>
+                      <th scope="colgroup" colspan="2" class="metric-group metric-group-start">Camera Control</th>
+                    </tr>
+                    <tr>
+                      <th scope="col" class="metric-col">Combined<span aria-label="higher is better">↑</span></th>
+                      <th scope="col" class="metric-col">Fine-grained<span aria-label="higher is better">↑</span></th>
+                      <th scope="col" class="metric-col metric-group-start">RPE<sub>rot</sub><span aria-label="lower is better">↓</span></th>
+                      <th scope="col" class="metric-col">RPE<sub>trans</sub><span aria-label="lower is better">↓</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="method-base">
+                      <th scope="row"><span class="method-label">Base Model</span></th>
+                      <td>0.240</td>
+                      <td>0.490</td>
+                      <td>0.6906</td>
+                      <td>0.0235</td>
+                    </tr>
+                    <tr class="method-child">
+                      <th scope="row"><span class="method-label"><span class="method-prefix">+</span> <em class="method-name">Random</em></span></th>
+                      <td>0.356</td>
+                      <td>0.569</td>
+                      <td>0.6393</td>
+                      <td>0.0199</td>
+                    </tr>
+                    <tr class="method-child">
+                      <th scope="row"><span class="method-label"><span class="method-prefix">+</span> <em class="method-name">Random + CFT</em></span></th>
+                      <td>0.369</td>
+                      <td>0.596</td>
+                      <td>0.5023</td>
+                      <td>0.0172</td>
+                    </tr>
+                    <tr class="method-child">
+                      <th scope="row"><span class="method-label"><span class="method-prefix">+</span> <em class="method-name">AOL</em></span></th>
+                      <td>0.393</td>
+                      <td>0.610</td>
+                      <td>0.5033</td>
+                      <td>0.0166</td>
+                    </tr>
+                    <tr class="method-child">
+                      <th scope="row"><span class="method-label"><span class="method-prefix">+</span> <em class="method-name">AOL + CFT (random negative)</em></span></th>
+                      <td>0.410</td>
+                      <td>0.622</td>
+                      <td>0.4670</td>
+                      <td>0.0163</td>
+                    </tr>
+                    <tr class="table-full">
+                      <th scope="row"><span class="method-label">Full Model <em class="method-name">(w/ CFT)</em></span></th>
+                      <td class="best-value">0.425</td>
+                      <td class="best-value">0.640</td>
+                      <td class="best-value">0.4072</td>
+                      <td class="best-value">0.0159</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <p class="result-takeaway"><strong>CFT improves action controllability even under random acquisition.</strong> The full model performs best, with visually similar negatives outperforming random negatives.</p>
+        </div>
+      </div>
+      <div class="extra-results" aria-labelledby="additional-results-title">
+        <h3 class="subsection-title" id="additional-results-title">Additional experiments</h3>
+        <details class="analysis-module"><summary><h4>Scoring-noise sensitivity</h4><span class="analysis-ref">Tab. 8</span><span class="details-toggle" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg></span></summary>
+        <div class="analysis-body">
+          <p class="table-caption">Ranking agreement as the scoring-noise level varies from 0.3 to 0.7, relative to the default σ* = 0.5 shown in gray.</p>
+          <div class="table-stage" data-table="scoringNoise">
+            <div class="table-shell table-shell-inline">
+              <div class="table-scroll" tabindex="0" role="region" aria-label="Stability of acquisition rankings; scroll horizontally for all metrics">
+                <table>
+                  <caption class="sr-only">Stability of acquisition rankings. Tab. 8 in the paper.</caption>
+                  <colgroup><col class="sigma-level"><col class="sigma-agreement"><col span="2"></colgroup>
+                  <thead>
+                    <tr>
+                      <th scope="col">σ*</th>
+                      <th scope="col" class="metric-col">Kendall’s τ<sub>b</sub><span aria-label="higher is better">↑</span><span class="cell-note">(p-value)</span></th>
+                      <th scope="col" class="metric-col">Rank difference ≤ 1<span aria-label="higher is better">↑</span></th>
+                      <th scope="col" class="metric-col">Rank difference ≤ 2<span aria-label="higher is better">↑</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">0.3</th>
+                      <td>0.8867 <span class="cell-note">(≈ 10⁻⁵)</span></td>
+                      <td>86.72%</td>
+                      <td>99.22%</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">0.4</th>
+                      <td>0.9386 <span class="cell-note">(≈ 10⁻⁵)</span></td>
+                      <td>92.97%</td>
+                      <td>100.00%</td>
+                    </tr>
+                    <tr class="reference-row">
+                      <th scope="row">0.5</th>
+                      <td class="reference-cell">1.0000 <span class="cell-note">(N.A.)</span></td>
+                      <td class="reference-cell">100.00%</td>
+                      <td class="reference-cell">100.00%</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">0.6</th>
+                      <td>0.9263 <span class="cell-note">(≈ 10⁻⁵)</span></td>
+                      <td>92.97%</td>
+                      <td>99.22%</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">0.7</th>
+                      <td>0.8320 <span class="cell-note">(≈ 10⁻⁵)</span></td>
+                      <td>75.78%</td>
+                      <td>91.41%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <p class="result-takeaway"><strong>Acquisition rankings remain stable around the default scoring-noise level.</strong> Most changes occur among branches with very similar scores.</p>
+        </div>
+        </details>
+        <details class="analysis-module"><summary><h4>Hardest-fork acquisition</h4><span class="analysis-ref">Tab. 9</span><span class="details-toggle" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg></span></summary>
+        <div class="analysis-body">
+          <p class="table-caption">Random and highest-scoring-fork acquisition compared using six visual-quality and action-control metrics.</p>
+          <div class="table-stage" data-table="hardestFork">
+            <div class="table-shell table-shell-inline">
+              <div class="table-scroll" tabindex="0" role="region" aria-label="Random versus hardest-fork acquisition; scroll horizontally for all metrics">
+                <table class="method-table">
+                  <caption class="sr-only">Random versus hardest-fork acquisition. Tab. 9 in the paper.</caption>
+                  <colgroup><col class="method-column"><col span="6" class="metric-column"></colgroup>
+                  <thead>
+                    <tr>
+                      <th scope="col">Method</th>
+                      <th scope="col" class="metric-col">SSIM<span aria-label="higher is better">↑</span></th>
+                      <th scope="col" class="metric-col">LPIPS<span aria-label="lower is better">↓</span></th>
+                      <th scope="col" class="metric-col">Combined<span aria-label="higher is better">↑</span></th>
+                      <th scope="col" class="metric-col">Fine-grained<span aria-label="higher is better">↑</span></th>
+                      <th scope="col" class="metric-col">RPE<sub>rot</sub><span aria-label="lower is better">↓</span></th>
+                      <th scope="col" class="metric-col">RPE<sub>trans</sub><span aria-label="lower is better">↓</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Random</th>
+                      <td>0.485</td>
+                      <td>0.480</td>
+                      <td>0.486</td>
+                      <td>0.693</td>
+                      <td>1.3642</td>
+                      <td>0.2191</td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><em>Hardest</em></th>
+                      <td>0.457</td>
+                      <td>0.561</td>
+                      <td>0.404</td>
+                      <td>0.604</td>
+                      <td>2.0324</td>
+                      <td>0.3530</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <p class="result-takeaway"><strong>Random acquisition outperforms hardest-fork selection across all six metrics.</strong></p>
+        </div>
+        </details>
+      </div>
+    </section>
+    </div>
+
+    <div class="section-band chapter-panel visual-band">
+    <section class="section-shell section-block" id="visualizations" aria-labelledby="visualizations-title">
+      <h2 id="visualizations-title">Qualitative results</h2>
+      <div class="visual-group">
+        <h3 id="minecraft-title">Action control in Minecraft</h3>
+        <p class="group-description"><strong>The Minecraft comparisons show ground-truth rollouts alongside OnlineWM and variants without CFT or AOL.</strong> They include leaf occlusion and interactions with forest, sandy and grassy terrain, where nearby geometry and environmental collisions challenge action-conditioned prediction. These examples examine how active acquisition and counterfactual supervision affect consistency between executed actions, camera motion and local scene structure.</p>
+        <div class="carousel carousel-minecraft" data-carousel role="region" aria-roledescription="carousel" aria-labelledby="minecraft-title">
+          <div class="carousel-track" id="carousel-minecraft" tabindex="0" aria-label="Action control in Minecraft; scroll horizontally or use arrow keys">
+            <figure class="carousel-slide" data-gallery-item="minecraft" data-figure-title="Action control under leaf occlusion" data-figure-label="Fig. 3" role="group" aria-roledescription="slide" aria-label="1 of 4">
+              <button class="figure-trigger" data-zoom="minecraft-main" aria-label="Enlarge Action control under leaf occlusion">
+                <img src="assets/media/visualization-1600.webp"
+                 srcset="assets/media/visualization-1600.webp 1600w, assets/media/visualization-2400.webp 2400w"
+                 sizes="(max-width: 700px) 94vw, 1080px"
+                 width="1600" height="693" loading="lazy" decoding="async"
+                 alt="Action control under leaf occlusion. The agent moves into tree leaves, creating strong occlusion and a shift in visual appearance. OnlineWM preserves the relation between the camera, trunk, and foliage more consistently, while removing CFT or AOL weakens the predicted response to the collision.">
+              </button>
+            </figure>
+            <figure class="carousel-slide" data-gallery-item="minecraft" data-figure-title="Collisions in forest terrain" data-figure-label="Fig. 5a" role="group" aria-roledescription="slide" aria-label="2 of 4">
+              <button class="figure-trigger" data-zoom="minecraft-forest" aria-label="Enlarge Collisions in forest terrain">
+                <img src="assets/media/visualization_appendix_1-1600.webp"
+                 srcset="assets/media/visualization_appendix_1-1600.webp 1600w, assets/media/visualization_appendix_1-2400.webp 2400w"
+                 sizes="(max-width: 700px) 94vw, 1080px"
+                 width="1600" height="688" loading="lazy" decoding="async"
+                 alt="Collisions in forest terrain. These Minecraft rollouts compare the full model with versions without CFT or AOL near uneven forest terrain. The highlighted regions show differences in the predicted interaction with the surrounding blocks.">
+              </button>
+            </figure>
+            <figure class="carousel-slide" data-gallery-item="minecraft" data-figure-title="Approaching a sandbank" data-figure-label="Fig. 5b" role="group" aria-roledescription="slide" aria-label="3 of 4">
+              <button class="figure-trigger" data-zoom="minecraft-sand" aria-label="Enlarge Approaching a sandbank">
+                <img src="assets/media/visualization_appendix_2-1600.webp"
+                 srcset="assets/media/visualization_appendix_2-1600.webp 1600w, assets/media/visualization_appendix_2-2400.webp 2400w"
+                 sizes="(max-width: 700px) 94vw, 1080px"
+                 width="1600" height="690" loading="lazy" decoding="async"
+                 alt="Approaching a sandbank. The models are compared as the camera approaches a stepped sand formation. The highlighted frames show differences in how the rollouts preserve the nearby surface and respond to the approach.">
+              </button>
+            </figure>
+            <figure class="carousel-slide" data-gallery-item="minecraft" data-figure-title="Interactions with grassy terrain" data-figure-label="Fig. 5c" role="group" aria-roledescription="slide" aria-label="4 of 4">
+              <button class="figure-trigger" data-zoom="minecraft-grass" aria-label="Enlarge Interactions with grassy terrain">
+                <img src="assets/media/visualization_appendix_3-1600.webp"
+                 srcset="assets/media/visualization_appendix_3-1600.webp 1600w, assets/media/visualization_appendix_3-2400.webp 2400w"
+                 sizes="(max-width: 700px) 94vw, 1080px"
+                 width="1600" height="687" loading="lazy" decoding="async"
+                 alt="Interactions with grassy terrain. This example compares action-conditioned rollouts around uneven grassy terrain. The highlighted regions make differences in local geometry and the predicted interaction visible across OnlineWM and its ablations.">
+              </button>
+            </figure>
+          </div>
+          <div class="carousel-controls">
+            <span class="carousel-hint">Swipe to compare <span aria-hidden="true">↔</span></span>
+            <div class="carousel-dots" aria-label="Choose a comparison">
+              <button type="button" data-carousel-dot="0" aria-label="Show comparison 1" aria-current="true"><span></span></button>
+              <button type="button" data-carousel-dot="1" aria-label="Show comparison 2" aria-current="false"><span></span></button>
+              <button type="button" data-carousel-dot="2" aria-label="Show comparison 3" aria-current="false"><span></span></button>
+              <button type="button" data-carousel-dot="3" aria-label="Show comparison 4" aria-current="false"><span></span></button>
+            </div>
+            <div class="carousel-navigation">
+              <span class="carousel-status" data-carousel-status aria-live="polite">1 / 4</span>
+              <button class="icon-button" type="button" data-carousel-prev aria-label="Previous comparison" aria-controls="carousel-minecraft" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button>
+              <button class="icon-button" type="button" data-carousel-next aria-label="Next comparison" aria-controls="carousel-minecraft"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="visual-group">
+        <h3 id="general-title">Generalization beyond Minecraft</h3>
+        <p class="group-description"><strong>We evaluate the Minecraft-trained model on indoor, outdoor and street-scene images without additional training or adaptation.</strong> OnlineWM and the WorldCompass RL post-training checkpoint receive the same action sequences. Generated frames, WorldMirror reconstructions and recovered camera trajectories illustrate transferred action control, while rotational and translational relative pose errors provide quantitative comparisons.</p>
+        <div class="carousel carousel-general" data-carousel role="region" aria-roledescription="carousel" aria-labelledby="general-title">
+          <div class="carousel-track" id="carousel-general" tabindex="0" aria-label="Generalization beyond Minecraft; scroll horizontally or use arrow keys">
+            <figure class="carousel-slide" data-gallery-item="general" data-figure-title="Looking up in an indoor scene" data-figure-label="Fig. 4 · Top panel" role="group" aria-roledescription="slide" aria-label="1 of 6">
+              <button class="figure-trigger" data-zoom="general-indoor-up" aria-label="Enlarge Looking up in an indoor scene">
+                <img src="assets/media/visualization_real_world-1600.webp"
+                 srcset="assets/media/visualization_real_world-1600.webp 1600w, assets/media/visualization_real_world-2400.webp 2400w"
+                 sizes="(max-width: 700px) 94vw, 1080px"
+                 width="1600" height="643" loading="lazy" decoding="async"
+                 alt="Looking up in an indoor scene. With the same movement and upward-view commands, OnlineWM produces a more pronounced upward camera change than the baseline. The accompanying reconstruction reports lower rotational and translational trajectory errors for OnlineWM.">
+              </button>
+            </figure>
+            <figure class="carousel-slide" data-gallery-item="general" data-figure-title="Looking up among outdoor structures" data-figure-label="Fig. 4 · Bottom panel" role="group" aria-roledescription="slide" aria-label="2 of 6">
+              <button class="figure-trigger" data-zoom="general-outdoor-up" aria-label="Enlarge Looking up among outdoor structures">
+                <img src="assets/media/visualization_real_world_2-1600.webp"
+                 srcset="assets/media/visualization_real_world_2-1600.webp 1600w, assets/media/visualization_real_world_2-2400.webp 2400w"
+                 sizes="(max-width: 700px) 94vw, 1080px"
+                 width="1600" height="833" loading="lazy" decoding="async"
+                 alt="Looking up among outdoor structures. The upward-view command tests action control in an outdoor scene with a different visual appearance from Minecraft. OnlineWM follows the upward change more closely, with lower trajectory errors in the accompanying reconstruction.">
+              </button>
+            </figure>
+            <figure class="carousel-slide" data-gallery-item="general" data-figure-title="Indoor forward and diagonal motion" data-figure-label="Fig. 6" role="group" aria-roledescription="slide" aria-label="3 of 6">
+              <button class="figure-trigger" data-zoom="general-indoor-translation" aria-label="Enlarge Indoor forward and diagonal motion">
+                <img src="assets/media/visualization_real_world_appendix_1-1600.webp"
+                 srcset="assets/media/visualization_real_world_appendix_1-1600.webp 1600w, assets/media/visualization_real_world_appendix_1-2400.webp 2400w"
+                 sizes="(max-width: 700px) 94vw, 1080px"
+                 width="1600" height="994" loading="lazy" decoding="async"
+                 alt="Indoor forward and diagonal motion. The sequence combines forward and diagonal movement in a furnished indoor scene. The generated views and recovered camera trajectories compare transferred action control, with lower reported pose errors for OnlineWM.">
+              </button>
+            </figure>
+            <figure class="carousel-slide" data-gallery-item="general" data-figure-title="Turning left in an outdoor scene" data-figure-label="Fig. 7" role="group" aria-roledescription="slide" aria-label="4 of 6">
+              <button class="figure-trigger" data-zoom="general-outdoor-left" aria-label="Enlarge Turning left in an outdoor scene">
+                <img src="assets/media/visualization_real_world_appendix_3-1600.webp"
+                 srcset="assets/media/visualization_real_world_appendix_3-1600.webp 1600w, assets/media/visualization_real_world_appendix_3-2400.webp 2400w"
+                 sizes="(max-width: 700px) 94vw, 1080px"
+                 width="1600" height="1105" loading="lazy" decoding="async"
+                 alt="Turning left in an outdoor scene. Forward motion is interrupted by a leftward-view command among outdoor structures. The reconstruction and recovered trajectory provide a second view of the comparison, with lower reported pose errors for OnlineWM.">
+              </button>
+            </figure>
+            <figure class="carousel-slide" data-gallery-item="general" data-figure-title="Turning right along a street" data-figure-label="Fig. 8" role="group" aria-roledescription="slide" aria-label="5 of 6">
+              <button class="figure-trigger" data-zoom="general-street-right" aria-label="Enlarge Turning right along a street">
+                <img src="assets/media/visualization_real_world_appendix_4-1600.webp"
+                 srcset="assets/media/visualization_real_world_appendix_4-1600.webp 1600w, assets/media/visualization_real_world_appendix_4-2400.webp 2400w"
+                 sizes="(max-width: 700px) 94vw, 1080px"
+                 width="1600" height="1043" loading="lazy" decoding="async"
+                 alt="Turning right along a street. This street scene combines forward, rightward-view, and diagonal-motion commands. The rollouts compare the baseline and OnlineWM under the same action sequence, and the trajectory measurements favor OnlineWM.">
+              </button>
+            </figure>
+            <figure class="carousel-slide" data-gallery-item="general" data-figure-title="Turning left along a street" data-figure-label="Fig. 9" role="group" aria-roledescription="slide" aria-label="6 of 6">
+              <button class="figure-trigger" data-zoom="general-street-left" aria-label="Enlarge Turning left along a street">
+                <img src="assets/media/visualization_real_world_appendix_2-1600.webp"
+                 srcset="assets/media/visualization_real_world_appendix_2-1600.webp 1600w, assets/media/visualization_real_world_appendix_2-2400.webp 2400w"
+                 sizes="(max-width: 700px) 94vw, 1080px"
+                 width="1600" height="1220" loading="lazy" decoding="async"
+                 alt="Turning left along a street. A leftward-view command between forward-motion segments tests control in a street scene. OnlineWM has lower reported rotational and translational errors in the recovered trajectory comparison.">
+              </button>
+            </figure>
+          </div>
+          <div class="carousel-controls">
+            <span class="carousel-hint">Swipe to compare <span aria-hidden="true">↔</span></span>
+            <div class="carousel-dots" aria-label="Choose a comparison">
+              <button type="button" data-carousel-dot="0" aria-label="Show comparison 1" aria-current="true"><span></span></button>
+              <button type="button" data-carousel-dot="1" aria-label="Show comparison 2" aria-current="false"><span></span></button>
+              <button type="button" data-carousel-dot="2" aria-label="Show comparison 3" aria-current="false"><span></span></button>
+              <button type="button" data-carousel-dot="3" aria-label="Show comparison 4" aria-current="false"><span></span></button>
+              <button type="button" data-carousel-dot="4" aria-label="Show comparison 5" aria-current="false"><span></span></button>
+              <button type="button" data-carousel-dot="5" aria-label="Show comparison 6" aria-current="false"><span></span></button>
+            </div>
+            <div class="carousel-navigation">
+              <span class="carousel-status" data-carousel-status aria-live="polite">1 / 6</span>
+              <button class="icon-button" type="button" data-carousel-prev aria-label="Previous comparison" aria-controls="carousel-general" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button>
+              <button class="icon-button" type="button" data-carousel-next aria-label="Next comparison" aria-controls="carousel-general"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    </div>
+
+    <section class="section-shell section-block citation-section" id="citation" aria-labelledby="citation-title">
+        <div class="citation-module glass-panel">
+          <div class="citation-heading">
+            <div><h2 id="citation-title">Citation</h2><p>If you find OnlineWM useful, please consider citing our work.</p></div><button class="button copy-button" data-copy-citation type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9h11v12H9zM15 9V3H3v12h6"/></svg><span>Copy BibTeX</span></button></div><pre tabindex="0" aria-label="BibTeX citation"><code id="bibtex-code">@misc{miao2026onlinewmcausalityawareactiveonline,
+      <span class="bib-key">title</span>={OnlineWM: Causality-Aware Active Online Learning for Effective World Modeling},
+      <span class="bib-key">author</span>={Yikun Miao and Fangqi Zhu and Quanxin Shou and Xiaoyi Pang and Zhengyang Yan and Junhao Li and Haodong Wang and Zicong Hong and Song Guo},
+      <span class="bib-key">year</span>={2026},
+      <span class="bib-key">eprint</span>={2609.23753},
+      <span class="bib-key">archivePrefix</span>={arXiv},
+      <span class="bib-key">primaryClass</span>={cs.CV},
+      <span class="bib-key">url</span>={https://arxiv.org/abs/2609.23753},
+}</code></pre><div class="citation-bottom"><span>2026</span><a class="text-button" href="citation.bib" download data-download-citation>Download .bib <span aria-hidden="true">↓</span></a></div><p id="copy-status" class="sr-only" aria-live="polite"></p></div>
+    </section>
+  </main>
+
+  <footer class="site-footer section-shell">
+    <a class="wordmark" href="#top"><img src="assets/brand/mark-512.png" width="29" height="29" alt=""><span class="brand-gradient">OnlineWM</span></a>
+    <div><a href="https://github.com/OnlineWM" target="_blank" rel="noopener">GitHub ↗</a><a href="mailto:songguo@cse.ust.hk">Contact ↗</a><a href="#top">Back to top ↑</a></div>
+    <p class="template-credit">If you use this website template, include a link back to <a href="https://onlinewm.github.io/">OnlineWM</a>.</p>
+  </footer>
+
+  <dialog class="lightbox" id="figure-dialog" aria-labelledby="lightbox-title"><div class="lightbox-toolbar"><div><span id="lightbox-label" class="eyebrow"></span><h2 id="lightbox-title"></h2></div><button class="icon-button lightbox-close" aria-label="Close figure" data-close-lightbox><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div><div class="lightbox-image-wrap"><img id="lightbox-image" alt=""></div><div class="lightbox-bottom"><p id="lightbox-description"></p></div></dialog>
+</body>
+</html>
